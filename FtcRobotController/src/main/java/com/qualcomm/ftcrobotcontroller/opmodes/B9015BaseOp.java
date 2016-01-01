@@ -119,7 +119,43 @@ public abstract class B9015BaseOp extends OpMode {
      * scaled value is less than linear.  This is to make it easier to drive
      * the robot more precisely at slower speeds.
      */
-    double scaleInput(double dVal)  {
+    double scaleInputSlow(double dVal)  {
+        //double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
+                //0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
+
+        double[] scaleArray = new double[20];
+        double val = 0.0;
+        for(int i = 0; i < 20; i++){
+            scaleArray[i] = val;
+            val += 0.03;
+        }
+
+        // get the corresponding index for the scaleInput array.
+        int index = (int) (dVal * 20.0);
+
+        // index should be positive.
+        if (index < 0) {
+            index = -index;
+        }
+
+        // index cannot exceed size of array minus 1.
+        if (index > 20) {
+            index = 20;
+        }
+
+        // get value from the array.
+        double dScale = 0.0;
+        if (dVal < 0) {
+            dScale = -scaleArray[index];
+        } else {
+            dScale = scaleArray[index];
+        }
+
+        // return scaled value.
+        return dScale;
+    }
+
+    double scaleInputFast(double dVal)  {
         double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
                 0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
 
@@ -147,5 +183,4 @@ public abstract class B9015BaseOp extends OpMode {
         // return scaled value.
         return dScale;
     }
-
 }

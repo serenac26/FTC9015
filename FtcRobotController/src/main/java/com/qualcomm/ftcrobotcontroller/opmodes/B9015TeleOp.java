@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.util.Range;
 public class B9015TeleOp extends B9015BaseOp {
     DcMotor motorPuller;
     Servo pivot;
+    boolean turbo;
 
     public B9015TeleOp(){
 
@@ -19,6 +20,7 @@ public class B9015TeleOp extends B9015BaseOp {
         super.init();
         motorPuller = hardwareMap.dcMotor.get("motorPull");
         pivot = hardwareMap.servo.get("servo1");
+        turbo = false;
     }
 
     /*
@@ -46,12 +48,26 @@ public class B9015TeleOp extends B9015BaseOp {
         left1 = Range.clip(left1, -1, 1);
         left2 = Range.clip(left2, -1, 1);
 
+        //turbo mode initiated by pressing y on game pad 1 once
+        //deactivated when pressed again
+        if (gamepad1.y)
+            turbo = true;
+
+        if(turbo && gamepad1.y)
+            turbo = false;
+
         // scale the joystick value to make it easier to control
         // the robot more precisely at slower speeds.
-        right1 = (float)scaleInput(right1);
-        left1 =  (float)scaleInput(left1);
-        left2 =  (float)scaleInput(left2);
-
+        if(turbo) {
+            right1 = (float) scaleInputFast(right1);
+            left1 = (float) scaleInputFast(left1);
+            left2 = (float) scaleInputFast(left2);
+        }
+        else{
+            right1 = (float) scaleInputSlow(right1);
+            left1 = (float) scaleInputSlow(left1);
+            left2 = (float) scaleInputSlow(left2);
+        }
         // write the values to the motors
         motorRightF.setPower(right1);
         motorLeftF.setPower(left1);
