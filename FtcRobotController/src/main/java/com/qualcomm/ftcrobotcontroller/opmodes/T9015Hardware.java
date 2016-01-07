@@ -308,11 +308,11 @@ public class T9015Hardware extends OpMode
         float l_power = Range.clip (p_power, -1, 1);
 
         float[] l_array =
-            { 0.00f, 0.05f, 0.09f, 0.10f, 0.12f
-            , 0.15f, 0.18f, 0.24f, 0.30f, 0.36f
-            , 0.43f, 0.50f, 0.60f, 0.72f, 0.85f
-            , 1.00f, 1.00f
-            };
+                { 0.00f, 0.05f, 0.09f, 0.10f, 0.12f
+                        , 0.15f, 0.18f, 0.24f, 0.30f, 0.36f
+                        , 0.43f, 0.50f, 0.60f, 0.72f, 0.85f
+                        , 1.00f, 1.00f
+                };
 
         //
         // Get the corresponding index for the specified argument/parameter.
@@ -388,7 +388,7 @@ public class T9015Hardware extends OpMode
             l_return = v_motor_f_right_drive.getPower ();
         }
 
-         return l_return;
+        return l_return;
 
     } // a_right_drive_power
 
@@ -797,9 +797,9 @@ public class T9015Hardware extends OpMode
      * Indicate whether the drive motors' encoders have reached a value.
      */
     boolean have_drive_encoders_reached
-        ( double p_left_count
-        , double p_right_count
-        )
+    ( double p_left_count
+            , double p_right_count
+    )
 
     {
         //
@@ -811,7 +811,7 @@ public class T9015Hardware extends OpMode
         // Have the encoders reached the specified values?
         //
         if (has_left_drive_encoder_reached (p_left_count) &&
-            has_right_drive_encoder_reached (p_right_count))
+                has_right_drive_encoder_reached (p_right_count))
         {
             //
             // Set the status to a positive indication.
@@ -834,11 +834,11 @@ public class T9015Hardware extends OpMode
      * Indicate whether the drive motors' encoders have reached a value.
      */
     boolean drive_using_encoders
-        ( double p_left_power
-        , double p_right_power
-        , double p_left_count
-        , double p_right_count
-        )
+    ( double p_left_power
+            , double p_right_power
+            , double p_left_count
+            , double p_right_count
+    )
 
     {
         //
@@ -1089,10 +1089,10 @@ public class T9015Hardware extends OpMode
         // Ensure the specific value is legal.
         //
         double l_position = Range.clip
-            ( p_position
-            , Servo.MIN_POSITION
-            , Servo.MAX_POSITION
-            );
+                ( p_position
+                        , Servo.MIN_POSITION
+                        , Servo.MAX_POSITION
+                );
 
         //
         // Set the value.  The right hand value must be opposite of the left

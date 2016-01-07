@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by seren_000 on 12/29/2015.
  */
 
-public class B9015RedAutoOp extends PushBotHardware {
+public class T9015BlueAutoOp extends T9015Hardware {
     DcMotor motorRightF;
     DcMotor motorLeftF;
     DcMotor motorRightR;
@@ -14,7 +14,7 @@ public class B9015RedAutoOp extends PushBotHardware {
 
     private int v_state = 0;
 
-    public B9015RedAutoOp(){
+    public T9015BlueAutoOp(){
 
     }
 
@@ -22,13 +22,15 @@ public class B9015RedAutoOp extends PushBotHardware {
     public void init(){
         reset_drive_encoders ();
 
-        motorRightF = hardwareMap.dcMotor.get("motor2");
+        /*motorRightF = hardwareMap.dcMotor.get("motor2");
         motorLeftF = hardwareMap.dcMotor.get("motor1");
         motorRightF.setDirection(DcMotor.Direction.REVERSE);
 
         motorRightR = hardwareMap.dcMotor.get("motor3");
         motorLeftR = hardwareMap.dcMotor.get("motor4");
-        motorLeftR.setDirection(DcMotor.Direction.REVERSE);
+        motorLeftR.setDirection(DcMotor.Direction.REVERSE);*/
+
+        super.init();
     }
 
     @Override
@@ -57,7 +59,7 @@ public class B9015RedAutoOp extends PushBotHardware {
                 //
                 // Start the drive wheel motors at full power.
                 //
-                set_drive_power(1.0f, 0.7f);
+                set_drive_power(0.1f, 1.0f);
 
                 //
                 // Have the motor shafts turned the required amount?
@@ -91,7 +93,7 @@ public class B9015RedAutoOp extends PushBotHardware {
                 break;
             case 3:
                 run_using_encoders ();
-                set_drive_power (-1.0f, -0.7f);
+                set_drive_power (-0.7f, -1.0f);
                 if (have_drive_encoders_reached (1440, 1440))
                 {
                     reset_drive_encoders ();

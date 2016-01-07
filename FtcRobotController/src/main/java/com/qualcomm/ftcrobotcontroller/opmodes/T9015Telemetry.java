@@ -106,13 +106,13 @@ public class T9015Telemetry extends T9015Hardware
                                 + a_r_right_encoder_count()
                 );
         telemetry.addData
-            ( "05"
-            , "Puler: " + a_puller_power()
-            );
+                ( "05"
+                        , "Puler: " + a_puller_power()
+                );
         telemetry.addData
-            ( "06"
-            , "Slider: " + a_slider_power ()
-            );
+                ( "06"
+                        , "Slider: " + a_slider_power ()
+                );
 
     } // update_telemetry
 

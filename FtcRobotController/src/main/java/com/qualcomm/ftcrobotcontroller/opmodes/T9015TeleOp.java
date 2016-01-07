@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.util.Range;
  * <p>
  * Enables control of the robot via the gamepad
  */
-public class TestTeleOp extends OpMode {
+public class T9015TeleOp extends OpMode {
 
     /*
      * Note: the configuration of the servos is such that
@@ -60,7 +60,7 @@ public class TestTeleOp extends OpMode {
     /**
      * Constructor
      */
-    public TestTeleOp() {
+    public T9015TeleOp() {
 
     }
 
@@ -214,7 +214,7 @@ public class TestTeleOp extends OpMode {
 
         // clip the position values so that they never exceed their allowed range.
         armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);
-       // clawPosition = Range.clip(clawPosition, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
+        // clawPosition = Range.clip(clawPosition, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
 
         // write position values to the wrist and claw servo
         servo1.setPosition(armPosition);
