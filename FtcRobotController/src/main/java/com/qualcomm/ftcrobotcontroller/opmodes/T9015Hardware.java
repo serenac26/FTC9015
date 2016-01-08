@@ -96,7 +96,6 @@ public class T9015Hardware extends OpMode
         try
         {
             v_motor_f_right_drive = hardwareMap.dcMotor.get ("motor2");
-            v_motor_f_right_drive.setDirection (DcMotor.Direction.REVERSE);
         }
         catch (Exception p_exeception)
         {
@@ -105,6 +104,8 @@ public class T9015Hardware extends OpMode
 
             v_motor_f_right_drive = null;
         }
+
+        move_forward(true);
 
         try
         {
@@ -121,7 +122,6 @@ public class T9015Hardware extends OpMode
         try
         {
             v_motor_r_right_drive = hardwareMap.dcMotor.get ("motor4");
-            v_motor_r_right_drive.setDirection (DcMotor.Direction.REVERSE);
         }
         catch (Exception p_exeception) {
             m_warning_message("motor4");
@@ -174,9 +174,54 @@ public class T9015Hardware extends OpMode
 
         double l_hand_position = 0.5;
 
-
+        move_forward(true);
 
     } // init
+
+
+    void move_forward(boolean forward) {
+        if (forward) {
+            if (v_motor_f_left_drive != null)
+                v_motor_f_left_drive.setDirection(DcMotor.Direction.FORWARD);
+            if (v_motor_r_left_drive != null)
+                v_motor_r_left_drive.setDirection(DcMotor.Direction.FORWARD);
+            if (v_motor_f_right_drive != null)
+                v_motor_f_right_drive.setDirection (DcMotor.Direction.REVERSE);
+            if (v_motor_r_right_drive != null)
+                v_motor_r_right_drive.setDirection (DcMotor.Direction.REVERSE);
+        } else {
+            if (v_motor_f_left_drive != null)
+                v_motor_f_left_drive.setDirection(DcMotor.Direction.REVERSE);
+            if (v_motor_r_left_drive != null)
+                v_motor_r_left_drive.setDirection(DcMotor.Direction.REVERSE);
+            if (v_motor_f_right_drive != null)
+                v_motor_f_right_drive.setDirection (DcMotor.Direction.FORWARD);
+            if (v_motor_r_right_drive != null)
+                v_motor_r_right_drive.setDirection (DcMotor.Direction.FORWARD);
+        }
+    }
+
+    void turn(boolean left) {
+        if (left) {
+            if (v_motor_f_left_drive != null)
+                v_motor_f_left_drive.setDirection(DcMotor.Direction.REVERSE);
+            if (v_motor_r_left_drive != null)
+                v_motor_r_left_drive.setDirection(DcMotor.Direction.REVERSE);
+            if (v_motor_f_right_drive != null)
+                v_motor_f_right_drive.setDirection (DcMotor.Direction.REVERSE);
+            if (v_motor_r_right_drive != null)
+                v_motor_r_right_drive.setDirection (DcMotor.Direction.REVERSE);
+        } else {
+            if (v_motor_f_left_drive != null)
+                v_motor_f_left_drive.setDirection(DcMotor.Direction.FORWARD);
+            if (v_motor_r_left_drive != null)
+                v_motor_r_left_drive.setDirection(DcMotor.Direction.FORWARD);
+            if (v_motor_f_right_drive != null)
+                v_motor_f_right_drive.setDirection (DcMotor.Direction.FORWARD);
+            if (v_motor_r_right_drive != null)
+                v_motor_r_right_drive.setDirection (DcMotor.Direction.FORWARD);
+        }
+    }
 
     //--------------------------------------------------------------------------
     //
@@ -415,10 +460,12 @@ public class T9015Hardware extends OpMode
     void set_drive_power (double p_left_power, double p_right_power)
 
     {
+
         if (v_motor_f_left_drive != null)
         {
             v_motor_f_left_drive.setPower (p_left_power);
         }
+
         if (v_motor_f_right_drive != null)
         {
             v_motor_f_right_drive.setPower (p_right_power);
@@ -905,7 +952,7 @@ public class T9015Hardware extends OpMode
         //
         // Has the left encoder reached zero?
         //
-        if (a_f_left_encoder_count() == 0)
+        if (a_r_left_encoder_count() == 0)
         {
             //
             // Set the status to a positive indication.
@@ -937,7 +984,7 @@ public class T9015Hardware extends OpMode
         //
         // Has the right encoder reached zero?
         //
-        if (a_f_right_encoder_count () == 0)
+        if (a_r_right_encoder_count () == 0)
         {
             //
             // Set the status to a positive indication.
