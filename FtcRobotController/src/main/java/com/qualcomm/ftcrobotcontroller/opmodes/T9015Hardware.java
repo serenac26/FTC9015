@@ -36,6 +36,11 @@ public class T9015Hardware extends OpMode
      *
      * The system calls this member when the class is instantiated.
      */
+
+    private final int TICKS_PER_REV = 1100;
+    private final double WHEEL_DIAMETER = 10.16; //in centimeters
+    private final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
+
     public T9015Hardware()
 
     {
@@ -105,7 +110,7 @@ public class T9015Hardware extends OpMode
             v_motor_f_right_drive = null;
         }
 
-        move_forward(true);
+        set_direction_forward(true);
 
         try
         {
@@ -174,12 +179,12 @@ public class T9015Hardware extends OpMode
 
         double l_hand_position = 0.5;
 
-        move_forward(true);
+        set_direction_forward(true);
 
     } // init
 
 
-    void move_forward(boolean forward) {
+    void set_direction_forward(boolean forward) {
         if (forward) {
             if (v_motor_f_left_drive != null)
                 v_motor_f_left_drive.setDirection(DcMotor.Direction.FORWARD);
@@ -222,7 +227,6 @@ public class T9015Hardware extends OpMode
                 v_motor_r_right_drive.setDirection (DcMotor.Direction.FORWARD);
         }
     }
-
     //--------------------------------------------------------------------------
     //
     // a_warning_generated
@@ -1185,6 +1189,88 @@ public class T9015Hardware extends OpMode
 
     } // open_hand
 
+    protected boolean has_driver_forward(double count, double power) {
+        set_drive_power(power, power);
+
+        //
+        // Have the motor shafts turned the required amount?
+        //
+        // If they haven't, then the op-mode remains in this state (i.e this
+        // block will be executed the next time this method is called).
+        //
+        if (have_drive_encoders_reached(count, count)) {
+            //
+            // Reset the encoders to ensure they are at a known good value.
+            //
+            reset_drive_encoders();
+            //
+            // Stop the motors.
+            //
+            set_drive_power(0.0f, 0.0f);
+
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean has_driver_backward(double count, double power) {
+        set_drive_power(power, power);
+
+        //
+        // Have the motor shafts turned the required amount?
+        //
+        // If they haven't, then the op-mode remains in this state (i.e this
+        // block will be executed the next time this method is called).
+        //
+        if (have_drive_encoders_reached(count, count)) {
+            //
+            // Reset the encoders to ensure they are at a known good value.
+            //
+            reset_drive_encoders();
+            //
+            // Stop the motors.
+            //
+            set_drive_power(0.0f, 0.0f);
+
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean has_driver_forward_cm(double cm, double power) {
+        return has_driver_forward(convertToTicks(cm), power);
+    }
+
+    protected boolean has_driver_turned(double count, double power) {
+
+        set_drive_power(power, power);
+
+        //
+        // Have the motor shafts turned the required amount?
+        //
+        // If they haven't, then the op-mode remains in this state (i.e this
+        // block will be executed the next time this method is called).
+        //
+        if (has_right_drive_encoder_reached (count) &&
+            has_left_drive_encoder_reached (count)) {
+            //
+            // Reset the encoders to ensure they are at a known good value.
+            //
+            reset_drive_encoders();
+
+            //
+            // Stop the motors.
+            //
+            set_drive_power(0.0f, 0.0f);
+
+            return true;
+        }
+        return false;
+    }
+
+    protected double convertToTicks(double cent){
+        return Math.round((cent / WHEEL_CIRCUMFERENCE) * TICKS_PER_REV);
+    }
     //--------------------------------------------------------------------------
     //
     // v_warning_generated
