@@ -6,13 +6,13 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
  * Created by seren_000 on 12/29/2015.
  */
 
-public class T9015RedAutoOp1 extends T9015Hardware {
+public class T9015BlueAutoOp1 extends T9015Hardware {
     private int v_state;
     private boolean v_inState;
     private boolean v_forward;
     private boolean v_turn_left;
 
-    public T9015RedAutoOp1(){
+    public T9015BlueAutoOp1(){
 
     }
 
@@ -37,7 +37,7 @@ public class T9015RedAutoOp1 extends T9015Hardware {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(197, 0.3))
+                if (has_driver_forward_cm(205, 0.3))
                     move_to_next_state();
                 break;
             case 2:
@@ -46,7 +46,7 @@ public class T9015RedAutoOp1 extends T9015Hardware {
                     move_to_next_state();
                 break;
             case 3:
-                v_turn_left = true;     // make left turn
+                v_turn_left = false;     // make left turn
                 if (first_time_in_state()) {
                     run_using_encoders();
                     turn(v_turn_left);
@@ -89,7 +89,7 @@ public class T9015RedAutoOp1 extends T9015Hardware {
                     move_to_next_state();
                 break;
             case 9:
-                v_turn_left = false;     // make left turn
+                v_turn_left = true;     // make left turn
                 if (first_time_in_state()) {
                     run_using_encoders();
                     turn(v_turn_left);
@@ -117,7 +117,7 @@ public class T9015RedAutoOp1 extends T9015Hardware {
                     move_to_next_state();
                 break;
             case 13:
-                v_turn_left = false;     // make right turn
+                v_turn_left = true;     // make right turn
                 if (first_time_in_state()) {
                     run_using_encoders();
                     turn(v_turn_left);

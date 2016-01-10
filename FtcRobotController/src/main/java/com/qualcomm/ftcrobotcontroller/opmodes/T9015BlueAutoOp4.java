@@ -6,13 +6,13 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
  * Created by seren_000 on 12/29/2015.
  */
 
-public class T9015RedAutoOp4 extends T9015Hardware {
+public class T9015BlueAutoOp4 extends T9015Hardware {
     private int v_state;
     private boolean v_inState;
     private boolean v_forward;
     private boolean v_turn_left;
 
-    public T9015RedAutoOp4(){
+    public T9015BlueAutoOp4(){
 
     }
 

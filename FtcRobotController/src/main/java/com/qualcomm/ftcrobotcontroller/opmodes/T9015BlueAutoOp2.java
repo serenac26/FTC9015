@@ -1,18 +1,18 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 /**
- * Climbers and up CLOSE red ramp
+ * Climbers and up FAR red ramp
  *
  * Created by seren_000 on 12/29/2015.
  */
 
-public class T9015RedAutoOp1 extends T9015Hardware {
+public class T9015BlueAutoOp2 extends T9015Hardware {
     private int v_state;
     private boolean v_inState;
     private boolean v_forward;
     private boolean v_turn_left;
 
-    public T9015RedAutoOp1(){
+    public T9015BlueAutoOp2(){
 
     }
 
@@ -37,7 +37,7 @@ public class T9015RedAutoOp1 extends T9015Hardware {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(197, 0.3))
+                if (has_driver_forward_cm(150, 0.4))
                     move_to_next_state();
                 break;
             case 2:
@@ -52,7 +52,7 @@ public class T9015RedAutoOp1 extends T9015Hardware {
                     turn(v_turn_left);
                 }
 
-                if (has_driver_turned(1500, 0.3))
+                if (has_driver_turned(1000, 0.4))
                     move_to_next_state();
                 break;
             case 4:
@@ -66,7 +66,7 @@ public class T9015RedAutoOp1 extends T9015Hardware {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(60, 0.3))
+                if (has_driver_forward_cm(20, 0.4))
                     move_to_next_state();
                 break;
             case 6:
@@ -80,7 +80,7 @@ public class T9015RedAutoOp1 extends T9015Hardware {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(60, 0.3))
+                if (has_driver_forward_cm(20, 0.4))
                     move_to_next_state();
                 break;
             case 8:
@@ -89,12 +89,12 @@ public class T9015RedAutoOp1 extends T9015Hardware {
                     move_to_next_state();
                 break;
             case 9:
-                v_turn_left = false;     // make left turn
+                v_turn_left = false;     // make right turn
                 if (first_time_in_state()) {
                     run_using_encoders();
                     turn(v_turn_left);
                 }
-                if (has_driver_turned(1100, 0.3))   // make left turn
+                if (has_driver_turned(8000, 0.4))   // make right turn
                     move_to_next_state();
                 break;
             case 10:
@@ -103,12 +103,12 @@ public class T9015RedAutoOp1 extends T9015Hardware {
                     move_to_next_state();
                 break;
             case 11:
-                v_forward = false;
+                v_forward = true;
                 if (first_time_in_state()) {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(48, 0.3))
+                if (has_driver_forward_cm(120, 0.4))
                     move_to_next_state();
                 break;
             case 12:
@@ -117,12 +117,12 @@ public class T9015RedAutoOp1 extends T9015Hardware {
                     move_to_next_state();
                 break;
             case 13:
-                v_turn_left = false;     // make right turn
+                v_turn_left = true;     // make left turn
                 if (first_time_in_state()) {
                     run_using_encoders();
                     turn(v_turn_left);
                 }
-                if (has_driver_turned(2000, 0.3))   // make right turn
+                if (has_driver_turned(1000, 0.4))   // make left turn
                     move_to_next_state();
                 break;
             case 14:
@@ -131,12 +131,12 @@ public class T9015RedAutoOp1 extends T9015Hardware {
                     move_to_next_state();
                 break;
             case 15:
-                v_forward = false;
+                v_forward = true;
                 if (first_time_in_state()) {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(200, 1.0)) //full throttle up the ramp
+                if (has_driver_forward_cm(100, 1.0)) //full throttle up the ramp
                     move_to_next_state();
                 break;
             default:

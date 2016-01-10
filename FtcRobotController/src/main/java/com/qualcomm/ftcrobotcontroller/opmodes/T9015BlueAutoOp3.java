@@ -1,18 +1,18 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 /**
- * Straight up FAR red ramp
+ * Straight up CLOSE red ramp
  *
  * Created by seren_000 on 12/29/2015.
  */
 
-public class T9015RedAutoOp4 extends T9015Hardware {
+public class T9015BlueAutoOp3 extends T9015Hardware {
     private int v_state;
     private boolean v_inState;
     private boolean v_forward;
     private boolean v_turn_left;
-
-    public T9015RedAutoOp4(){
+    private int count;
+    public T9015BlueAutoOp3(){
 
     }
 
@@ -21,6 +21,7 @@ public class T9015RedAutoOp4 extends T9015Hardware {
         super.init();
         v_state = 0;
         v_inState = false;
+        count = 0;
     }
 
     @Override
@@ -32,12 +33,12 @@ public class T9015RedAutoOp4 extends T9015Hardware {
                 move_to_next_state();
                 break;
             case 1:
-                v_forward = true;
+                v_forward = false;
                 if (first_time_in_state()) {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(50, 0.4))
+                if (has_driver_forward_cm(142, 0.3))
                     move_to_next_state();
                 break;
             case 2:
@@ -46,13 +47,13 @@ public class T9015RedAutoOp4 extends T9015Hardware {
                     move_to_next_state();
                 break;
             case 3:
-                v_turn_left = false;     // make right turn
+                v_turn_left = false;     // make left turn
                 if (first_time_in_state()) {
                     run_using_encoders();
                     turn(v_turn_left);
                 }
 
-                if (has_driver_turned(2000, 0.4))
+                if (has_driver_turned(2250, 0.3))
                     move_to_next_state();
                 break;
             case 4:
@@ -60,16 +61,28 @@ public class T9015RedAutoOp4 extends T9015Hardware {
                 if (have_drive_encoders_reset())
                     move_to_next_state();
                 break;
-
             case 5:
                 v_forward = true;
                 if (first_time_in_state()) {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(250, 1.0)) //full throttle up the ramp
+                if (has_driver_forward_cm(200, 1.0)) //full throttle up the ramp
                     move_to_next_state();
                 break;
+            /*case 5:
+                v_forward = true;
+                if(count >= 500)
+                    move_to_next_state();
+                if (first_time_in_state()) {
+                    //run_using_encoders();
+                    set_direction_forward(v_forward);
+                }
+                //if (has_driver_forward_cm(400, 1.0)) //full throttle up the ramp
+                //move_to_next_state();
+                set_drive_power(1.0, 1.0);
+                count++;
+                break;*/
             default:
                 //
                 // The autonomous actions have been accomplished (i.e. the state has

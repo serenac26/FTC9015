@@ -1252,7 +1252,7 @@ public class T9015Hardware extends OpMode
         // block will be executed the next time this method is called).
         //
         if (has_right_drive_encoder_reached (count) &&
-            has_left_drive_encoder_reached (count)) {
+                has_left_drive_encoder_reached (count)) {
             //
             // Reset the encoders to ensure they are at a known good value.
             //
