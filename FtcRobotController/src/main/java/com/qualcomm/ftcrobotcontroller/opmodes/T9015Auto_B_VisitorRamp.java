@@ -63,7 +63,7 @@ public class T9015Auto_B_VisitorRamp extends T9015Hardware {
                     run_using_encoders();
                     go_backward();  //set direction backward
                 }
-                distance = 30;  //set distance to move (cm)
+                distance = 60;  //set distance to move (cm)
                 power    = 0.3;  //set power
                 telemetry.addData("2 - ","backward=" + distance + "p=" + power); //displays distance and power to phone screen
                 if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
