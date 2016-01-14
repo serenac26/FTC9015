@@ -46,7 +46,7 @@ public class T9015Auto_R_VisitorClimberRamp extends T9015Hardware {
                     run_using_encoders();
                     go_forward(); //set direction forward
                 }
-                distance = 30; //set distance to move (cm)
+                distance = 130; //set distance to move (cm)
                 power    = 0.3; //set power
                 telemetry.addData("1 - ", "forward=" + distance + "p=" + power); //displays distance and power to phone screen
                 if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
@@ -80,97 +80,35 @@ public class T9015Auto_R_VisitorClimberRamp extends T9015Hardware {
                     run_using_encoders();
                     go_forward(); //set direction forward
                 }
-                distance = 120;  //set distance to move (cm)
+                distance = 10;  //set distance to move (cm)
                 power    = 0.3;  //set power
                 telemetry.addData("3 - ","forward=" + distance + "p=" + power); //displays distance and power to phone screen
                 if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
                     move_to_next_state();
                 break;
             case 6:
-                // allow the encoder to reset
-                if (have_drive_encoders_reset())
-                    move_to_next_state();
-                break;
-            case 7:
-                //only need to initialize encoders on first time in state
-                if (first_time_in_state()) {
-                    run_using_encoders();
-                    turn_right(); //set direction to turn left
-                }
-                degrees    = 45;  //set turn degree
-                power    = 0.3;  //set power
-                telemetry.addData("5 - ", "turn_right=" + degrees + "p=" + power); //displays distance and power to phone screen
-                if (has_driver_turned_degrees(degrees, power)) //when encoder has reached given number of ticks corresponding to given degree measure move to next state
-                    move_to_next_state();
-                break;
-            case 8:
-                // allow the encoder to reset
-                if (have_drive_encoders_reset())
-                    move_to_next_state();
-                break;
-            case 9:
-                //only need to initialize encoders on first time in state
-                if (first_time_in_state()) {
-                    run_using_encoders();
-                    go_forward(); //set direction forward
-                }
-                distance = 10;  //set distance to move (cm)
-                power    = 0.3;  //set power
-                telemetry.addData("3 - ","forward=" + distance + "p=" + power); //displays distance and power to phone screen
-                if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
-                    move_to_next_state();
-                break;
-            case 10:
-                // allow the encoder to reset
-                if (have_drive_encoders_reset())
-                    move_to_next_state();
-                break;
-            case 11:
-                //only need to initialize encoders on first time in state
-                if (first_time_in_state()) {
-                    run_using_encoders();
-                    turn_left(); //set direction to turn left
-                }
-                degrees    = 90; //set turn degree
-                power = 0.3; //set power
-                telemetry.addData("2 - ", "turn_left=" + degrees + "p=" + power); //displays distance and power to phone screen
-                if (has_driver_turned_degrees(degrees, power)) //when encoder has reached given number of ticks corresponding to given degree measure move to next state
-                    move_to_next_state();
-                break;
-            case 12:
-                // allow the encoder to reset
-                if (have_drive_encoders_reset())
-                    move_to_next_state();
-                break;
-            case 13:
-                //only need to initialize encoders on first time in state
-                if (first_time_in_state()) {
-                    run_using_encoders();
-                    go_forward(); //set direction forward
-                }
-                distance = 10;  //set distance to move (cm)
-                power    = 0.3;  //set power
-                telemetry.addData("3 - ","forward=" + distance + "p=" + power); //displays distance and power to phone screen
-                if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
-                    move_to_next_state();
-                break;
-            case 14:
-                // allow the encoder to reset
-                if (have_drive_encoders_reset())
-                    move_to_next_state();
-                break;
-            case 15:
                 for(int i = 0; i < 500; i++){
-                    set_hang_power(1.0);
+                    set_hang_power(0.6);
                 }
                 move_to_next_state();
                 break;
-            case 16:
+            case 7:
                 // allow the encoder to reset
                 if (have_drive_encoders_reset())
                     move_to_next_state();
                 break;
-            case 17:
+            case 8:
+                for(int i = 0; i < 500; i++){
+                    set_hang_power(-0.6);
+                }
+                move_to_next_state();
+                break;
+            case 9:
+                // allow the encoder to reset
+                if (have_drive_encoders_reset())
+                    move_to_next_state();
+                break;
+            case 10:
                 //only need to initialize encoders on first time in state
                 if (first_time_in_state()) {
                     run_using_encoders();
@@ -182,12 +120,12 @@ public class T9015Auto_R_VisitorClimberRamp extends T9015Hardware {
                 if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
                     move_to_next_state();
                 break;
-            case 18:
+            case 11:
                 // allow the encoder to reset
                 if (have_drive_encoders_reset())
                     move_to_next_state();
                 break;
-            case 19:
+            case 12:
                 //only need to initialize encoders on first time in state
                 if (first_time_in_state()) {
                     run_using_encoders();
@@ -199,12 +137,12 @@ public class T9015Auto_R_VisitorClimberRamp extends T9015Hardware {
                 if (has_driver_turned_degrees(degrees, power)) //when encoder has reached given number of ticks corresponding to given degree measure move to next state
                     move_to_next_state();
                 break;
-            case 20:
+            case 13:
                 // allow the encoder to reset
                 if (have_drive_encoders_reset())
                     move_to_next_state();
                 break;
-            case 21:
+            case 14:
                 //only need to initialize encoders on first time in state
                 if (first_time_in_state()) {
                     run_using_encoders();
