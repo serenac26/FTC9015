@@ -55,50 +55,41 @@ public class FtcOpModeRegister implements OpModeRegister {
      * If two or more op modes are registered with the same name, the app will display an error.
      */
 
-    //manager.register("NullOp", NullOp.class);
+    manager.register("NullOp", NullOp.class);
 
     //manager.register("MatrixK9TeleOp", MatrixK9TeleOp.class);
-    /*manager.register("K9TeleOp", K9TeleOp.class);
-    manager.register("K9Line", K9Line.class);
-    manager.register ("PushBotAuto", PushBotAuto.class);
-    manager.register ("PushBotManual", PushBotManual.class);*/
-    manager.register("T9015TeleOp", T9015TeleOp.class);
-    //manager.register("B9015AutoOp(not ready)", B9015AutoOp.class);
-    manager.register("Red Auto 1", T9015RedAutoOp1.class);
-    manager.register("Red Auto 2", T9015RedAutoOp2.class);
-    manager.register("Red Auto 3", T9015RedAutoOp3.class);
-    manager.register("Red Auto 4", T9015RedAutoOp4.class);
+//
+//   manager.register("TestTeleOp", TestTeleOp.class);
 
+    manager.register("TeleOp", T9015TeleOp.class);
+    manager.register("R_ramp", T9015Auto_R_VisitorRamp.class);
+   // manager.register("T9015BlueAutoOp", T9015BlueAutoOp.class);
+
+  //  manager.register("T9015RedAutoOp1", T9015RedAutoOp1.class);
+  //  manager.register("T9015RedAutoOp2", T9015RedAutoOp2.class);
+  //  manager.register("T9015RedAutoOp3", T9015RedAutoOp3.class);
+  //  manager.register("T9015RedAutoOp4", T9015RedAutoOp4.class);
+    //manager.register("DetectColor", DetectColor.class);
+    manager.register("OpModeConfig", OpModeConfig.class);
+    manager.register("OpFtcConfig", OpModeConfig.class);
+  //  manager.register("T9015BlueAutoOp1", T9015BlueAutoOp1.class);
+  //  manager.register("T9015BlueAutoOp2", T9015BlueAutoOp2.class);
+  //  manager.register("T9015BlueAutoOp3", T9015BlueAutoOp3.class);
+  //  manager.register("T9015BlueAutoOp4", T9015BlueAutoOp4.class);
+    manager.register("T9015RedAutoOpHR", T9015Auto_R_HomeRamp.class);
+    manager.register("T9015BlueAutoOpVR", T9015Auto_R_VisitorRamp.class);
+    manager.register("T9015BlueAutoOpHCR", T9015Auto_R_HomeClimberRamp.class);
+    manager.register("T9015BlueAutoOpVCR", T9015Auto_R_VisitorClimberRamp.class);
     /*
      * Uncomment any of the following lines if you want to register an op mode.
      */
-    //manager.register("MR Gyro Test", MRGyroTest.class);
+//    manager.register("MR Gyro Test", MRGyroTest.class);
 
-    //manager.register("AdafruitRGBExample", AdafruitRGBExample.class);
-    //manager.register("ColorSensorDriver", ColorSensorDriver.class);
+     //manager.register("ColorSensorDriver", ColorSensorDriver.class);
 
     //manager.register("IrSeekerOp", IrSeekerOp.class);
     //manager.register("CompassCalibration", CompassCalibration.class);
     //manager.register("I2cAddressChangeExample", LinearI2cAddressChange.class);
 
-
-    //manager.register("NxtTeleOp", NxtTeleOp.class);
-
-    //manager.register("LinearK9TeleOp", LinearK9TeleOp.class);
-    //manager.register("LinearIrExample", LinearIrExample.class);
-
-
-    //manager.register ("PushBotManual1", PushBotManual1.class);
-    //manager.register ("PushBotAutoSensors", PushBotAutoSensors.class);
-    //manager.register ("PushBotIrEvent", PushBotIrEvent.class);
-
-    //manager.register ("PushBotManualSensors", PushBotManualSensors.class);
-    //manager.register ("PushBotOdsDetectEvent", PushBotOdsDetectEvent.class);
-    //manager.register ("PushBotOdsFollowEvent", PushBotOdsFollowEvent.class);
-    //manager.register ("PushBotTouchEvent", PushBotTouchEvent.class);
-
-    //manager.register("PushBotDriveTouch", PushBotDriveTouch.java);
-    //manager.register("PushBotIrSeek", PushBotIrSeek.java);
-    //manager.register("PushBotSquare", PushBotSquare.java);
-  }
+}
 }

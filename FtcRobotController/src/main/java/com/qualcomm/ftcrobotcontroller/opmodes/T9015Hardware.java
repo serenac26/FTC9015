@@ -36,10 +36,16 @@ public class T9015Hardware extends OpMode
      *
      * The system calls this member when the class is instantiated.
      */
+    final static double H_ARM_MIN_RANGE  = 0.52;
+    final static double H_ARM_MAX_RANGE  = 0.95;
 
-    private final int TICKS_PER_REV = 1100;
+    final static double H_BACK_MIN_RANGE  = 0.001;
+    final static double H_BACK_MAX_RANGE  = .999;
+
+    private final int TICKS_PER_REV = 1120;
     private final double WHEEL_DIAMETER = 10.16; //in centimeters
     private final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
+    private final int TURN_45_DEGREES = 1000;
 
     public T9015Hardware()
 
@@ -159,6 +165,28 @@ public class T9015Hardware extends OpMode
             v_motor_slider = null;
         }
 
+        try
+        {
+            v_motor_left_hang = hardwareMap.dcMotor.get ("hang1");
+        }
+        catch (Exception p_exeception)
+        {
+            m_warning_message ("hang1");
+            DbgLog.msg (p_exeception.getLocalizedMessage ());
+
+            v_motor_left_hang = null;
+        }
+        try
+        {
+            v_motor_right_hang = hardwareMap.dcMotor.get ("hang2");
+        }
+        catch (Exception p_exeception)
+        {
+            m_warning_message ("hang2");
+            DbgLog.msg (p_exeception.getLocalizedMessage ());
+
+            v_motor_right_hang = null;
+        }
         //
         // Connect the servo motors.
         //
@@ -177,12 +205,59 @@ public class T9015Hardware extends OpMode
             v_servo_puller = null;
         }
 
+        try
+        {
+            v_servo_back = hardwareMap.servo.get ("sback");
+        }
+        catch (Exception p_exeception)
+        {
+            m_warning_message ("sback");
+            DbgLog.msg (p_exeception.getLocalizedMessage ());
+
+            v_servo_back = null;
+        }
+
         double l_hand_position = 0.5;
 
         set_direction_forward(true);
 
     } // init
 
+    void set_servo_down ()
+    {
+        if (v_servo_puller != null)
+        {
+            v_servo_puller.setPosition(H_ARM_MAX_RANGE);
+        }
+        if (v_servo_back != null)
+        {
+            v_servo_back.setPosition(H_BACK_MIN_RANGE);
+        }
+
+    }
+
+    void set_servo_up ()
+    {
+        if (v_servo_puller != null)
+        {
+            v_servo_puller.setPosition(H_ARM_MIN_RANGE);
+        }
+        if (v_servo_back != null)
+        {
+            v_servo_back.setPosition(H_BACK_MAX_RANGE);
+        }
+
+    }
+
+    void go_forward()
+    {
+        set_direction_forward(true);
+    }
+
+    void go_backward()
+    {
+        set_direction_forward(false);
+    }
 
     void set_direction_forward(boolean forward) {
         if (forward) {
@@ -227,6 +302,17 @@ public class T9015Hardware extends OpMode
                 v_motor_r_right_drive.setDirection (DcMotor.Direction.FORWARD);
         }
     }
+
+    void turn_left ()
+    {
+        turn(true);
+    }
+
+    void turn_right ()
+    {
+        turn(false);
+    }
+
     //--------------------------------------------------------------------------
     //
     // a_warning_generated
@@ -500,7 +586,7 @@ public class T9015Hardware extends OpMode
             telemetry.addData("10", "run_using_left_drive_encoder");
 
             v_motor_r_left_drive.setMode
-                    ( DcMotorController.RunMode.RUN_USING_ENCODERS
+                    (DcMotorController.RunMode.RUN_USING_ENCODERS
                     );
         }
 
@@ -702,6 +788,7 @@ public class T9015Hardware extends OpMode
     /**
      * Access the left encoder's count.
      */
+    int m_f_left_encoder_count=0;
     int a_f_left_encoder_count ()
     {
         int l_return = 0;
@@ -710,10 +797,12 @@ public class T9015Hardware extends OpMode
         {
             l_return = v_motor_f_left_drive.getCurrentPosition ();
         }
-
+        m_f_left_encoder_count = l_return;
         return l_return;
 
     } // a_left_encoder_count
+
+    int m_r_left_encoder_count = 0;
     int a_r_left_encoder_count ()
     {
         int l_return = 0;
@@ -722,7 +811,7 @@ public class T9015Hardware extends OpMode
         {
             l_return = v_motor_r_left_drive.getCurrentPosition ();
         }
-
+        m_r_left_encoder_count = l_return;
         return l_return;
 
     } // a_left_encoder_count
@@ -734,6 +823,7 @@ public class T9015Hardware extends OpMode
     /**
      * Access the right encoder's count.
      */
+    int m_f_right_encoder_count = 0;
     int a_f_right_encoder_count ()
 
     {
@@ -742,11 +832,12 @@ public class T9015Hardware extends OpMode
         {
             l_return = v_motor_f_right_drive.getCurrentPosition ();
         }
-
+        m_f_right_encoder_count = l_return;
         return l_return;
 
     } // a_right_encoder_count
 
+    int m_r_right_encoder_count = 0;
     int a_r_right_encoder_count ()
     {
         int l_return = 0;
@@ -755,7 +846,7 @@ public class T9015Hardware extends OpMode
         {
             l_return = v_motor_r_right_drive.getCurrentPosition ();
         }
-
+        m_r_right_encoder_count = l_return;
         return l_return;
 
     } // a_right_encoder_count
@@ -988,7 +1079,7 @@ public class T9015Hardware extends OpMode
         //
         // Has the right encoder reached zero?
         //
-        if (a_r_right_encoder_count () == 0)
+        if (a_r_right_encoder_count() == 0)
         {
             //
             // Set the status to a positive indication.
@@ -1189,6 +1280,18 @@ public class T9015Hardware extends OpMode
 
     } // open_hand
 
+    void set_hang_power(double power){
+        if (v_motor_left_hang != null)
+        {
+            v_motor_left_hang.setPower (power);
+        }
+
+        if (v_motor_right_hang != null)
+        {
+            v_motor_right_hang.setPower (power);
+        }
+    }
+
     protected boolean has_driver_forward(double count, double power) {
         set_drive_power(power, power);
 
@@ -1238,7 +1341,11 @@ public class T9015Hardware extends OpMode
     }
 
     protected boolean has_driver_forward_cm(double cm, double power) {
-        return has_driver_forward(convertToTicks(cm), power);
+        return has_driver_forward(convertCMToTicks(cm), power);
+    }
+
+    protected boolean has_driver_turned_degrees(double degrees, double power){
+        return has_driver_turned(convertDegreesToTicks(degrees), power);
     }
 
     protected boolean has_driver_turned(double count, double power) {
@@ -1268,8 +1375,12 @@ public class T9015Hardware extends OpMode
         return false;
     }
 
-    protected double convertToTicks(double cent){
+    protected long convertCMToTicks(double cent){
         return Math.round((cent / WHEEL_CIRCUMFERENCE) * TICKS_PER_REV);
+    }
+
+    protected long convertDegreesToTicks(double degrees){
+        return Math.round((degrees / 45) * TURN_45_DEGREES);
     }
     //--------------------------------------------------------------------------
     //
@@ -1327,6 +1438,25 @@ public class T9015Hardware extends OpMode
      * Manage the aspects of the rear right drive motor.
      */
     private DcMotor v_motor_r_right_drive;
+
+    //--------------------------------------------------------------------------
+    //
+    // v_motor_r_left_drive
+    //
+    /**
+     * Manage the aspects of the rearleft drive motor.
+     */
+    private DcMotor v_motor_left_hang;
+
+    //--------------------------------------------------------------------------
+    //
+    // v_motor_r_right_drive
+    //
+    /**
+     * Manage the aspects of the rear right drive motor.
+     */
+    private DcMotor v_motor_right_hang;
+
     //--------------------------------------------------------------------------
     //
     // v_motor_puller
@@ -1356,12 +1486,12 @@ public class T9015Hardware extends OpMode
 
     //--------------------------------------------------------------------------
     //
-    // v_servo_drop
+    // v_servo_back
     //
     /**
-     * Manage the aspects of the drop servo.
+     * Manage the aspects of the back plate servo
      */
-    //private Servo v_servo_drop;
+    private Servo v_servo_back;
 
 
 } // PushBotHardware

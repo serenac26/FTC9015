@@ -5,16 +5,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
-/** 4wd test
- * Created by ttn on 12/05/2015.
+/**
+ * Created by Minh-Phong on 12/05/2015.
  */
 
 /**
- * TeleOp Mode
+ * Team 9015 TeleOp Mode
  * <p>
  * Enables control of the robot via the gamepad
  */
-public class T9015TeleOp extends OpMode {
+public class T9015TeleOp extends T9015Hardware { // OpMode {
 
     /*
      * Note: the configuration of the servos is such that
@@ -24,8 +24,11 @@ public class T9015TeleOp extends OpMode {
     // TETRIX VALUES.
 
 
-    final static double ARM_MIN_RANGE  = 0.5;
-    final static double ARM_MAX_RANGE  = 0.8;
+    final static double ARM_MIN_RANGE  = 0.52;
+    final static double ARM_MAX_RANGE  = 0.95;
+
+    final static double BACK_MIN_RANGE  = 0.001;
+    final static double BACK_MAX_RANGE  = .999;
 
     /*
     final static double CLAW_MIN_RANGE  = 0.20;
@@ -45,6 +48,10 @@ public class T9015TeleOp extends OpMode {
     // position of the arm servo.
     double armPosition;
 
+    // position of back servo
+    double backPosition;
+    double backDelta = 0.1;
+
     // amount to change the arm servo position.
     double armDelta = 0.005;
 
@@ -52,7 +59,10 @@ public class T9015TeleOp extends OpMode {
     DcMotor motorLeftF;
     DcMotor motorRightR;
     DcMotor motorLeftR;
-    Servo servo1;
+    DcMotor hang1;
+    DcMotor hang2;
+    Servo   servo1;
+    Servo   sback;
 
     DcMotor pull;
     DcMotor slide;
@@ -77,16 +87,9 @@ public class T9015TeleOp extends OpMode {
 		 * configured your robot and created the configuration file.
 		 */
 
-		/*
-		 * For the demo Tetrix K9 bot we assume the following,
-		 *   There are two motors "motor_1" and "motor_2"
-		 *   "motor_1" is on the right side of the bot.
-		 *   "motor_2" is on the left side of the bot.
-		 *
-		 * We also assume that there are two servos "servo_1" and "servo_6"
-		 *    "servo_1" controls the arm joint of the manipulator.
-		 *    "servo_6" controls the claw joint of the manipulator.
-		 */
+
+        super.init();
+
         motorRightF = hardwareMap.dcMotor.get("motor2");
         motorLeftF = hardwareMap.dcMotor.get("motor1");
         motorRightF.setDirection(DcMotor.Direction.REVERSE);
@@ -95,14 +98,28 @@ public class T9015TeleOp extends OpMode {
         motorLeftR = hardwareMap.dcMotor.get("motor4");
         motorLeftR.setDirection(DcMotor.Direction.REVERSE);
 
-        servo1 = hardwareMap.servo.get("servo1");
-        pull = hardwareMap.dcMotor.get("pull");
-        slide = hardwareMap.dcMotor.get("slide");
-        //claw = hardwareMap.servo.get("servo_6");
+        hang1 = hardwareMap.dcMotor.get("hang1");
+        hang2 = hardwareMap.dcMotor.get("hang2");
+        hang2.setDirection(DcMotor.Direction.REVERSE);
 
-        // assign the starting position of the wrist and claw
+        // servo to guide the puller tape
+        servo1 = hardwareMap.servo.get("spull");
+
+        // back plate servo
+        sback = hardwareMap.servo.get("sback");
+
+        // motor for the puller tape
+        pull = hardwareMap.dcMotor.get("pull");
+
+        // motor for the slider in the back
+        slide = hardwareMap.dcMotor.get("slide");
+
+        // assign the starting position of the puller
         armPosition = ARM_MAX_RANGE;
-        //clawPosition = 0.2;
+
+        // init position for the back plate servo is down
+        backPosition = BACK_MIN_RANGE;
+
     }
 
     /*
@@ -120,14 +137,16 @@ public class T9015TeleOp extends OpMode {
 		 * wrist/claw via the a,b, x, y buttons
 		 */
 
-        // tank drive
+        // power for the hangers motors
+        double hpower;
+
         // note that if y equal -1 then joystick is pushed all of the way forward.
-        float left = -gamepad1.left_stick_y;
+        float left  = -gamepad1.left_stick_y;
         float right = -gamepad1.right_stick_y;
 
         // clip the right/left values so that the values never exceed +/- 1
         right = Range.clip(right, -1, 1);
-        left = Range.clip(left, -1, 1);
+        left  = Range.clip(left, -1, 1);
 
         // scale the joystick value to make it easier to control
         // the robot more precisely at slower speeds.
@@ -141,10 +160,10 @@ public class T9015TeleOp extends OpMode {
         motorLeftR.setPower(right);
 
         // moves slider, x to the left, b to the right
-        if (gamepad1.x) {
+        if (gamepad1.x || gamepad2.x ) {
             slide.setPower(-1);
         }
-        else if (gamepad1.b) {
+        else if (gamepad1.b || gamepad2.b ) {
             slide.setPower(1);
         }
         else
@@ -152,11 +171,38 @@ public class T9015TeleOp extends OpMode {
             slide.setPower(0);
         }
 
+        //moves hanging arms
+        if (gamepad1.dpad_up || gamepad2.dpad_up) {
+            hpower =-0.15;
+        }
+        else if (gamepad1.dpad_down || gamepad2.dpad_down) {
+            hpower =0.15;
+        }
+        else
+        {
+            // power 0
+            hpower = 0;
+        }
+        // left bumper is pressed -> lower power for dropping the climber
+//        if (gamepad1.left_trigger > 0.25)
+//        {
+//            hang1.setPower(-0.20);
+//        }
+//        else {
+            hang1.setPower(hpower);
+            hang2.setPower(hpower);
+//        }
+
+        //lock winch, if left bumper clicked set motor to 0.25 power constant
         if (gamepad1.left_bumper)
         {
             if (lock_puller == false)
             {
                 lock_puller = true;
+            }
+            else
+            {
+                lock_puller = false;
             }
         }
 
@@ -177,16 +223,28 @@ public class T9015TeleOp extends OpMode {
 
         // update the position of the arm.
 
-        if (gamepad1.right_bumper) {
+        if (gamepad1.right_bumper || gamepad2.right_bumper ) {
             // if the bumper is pushed on gamepad1, increment the position of
             // the arm servo.
             armPosition -= armDelta;
         }
 
-        if (gamepad1.right_trigger > 0.25) {
+        if (gamepad1.right_trigger > 0.25 || gamepad2.right_trigger > 0.25 ) {
             // if the trigger is pushed on gamepad1, decrease the position of
             // the arm servo.
             armPosition += armDelta;
+        }
+
+        if (gamepad1.dpad_right || gamepad2.dpad_right ) {
+            // if the bumper is pushed on gamepad1, increment the position of
+            // the arm servo.
+            backPosition = BACK_MIN_RANGE;
+        }
+
+        if (gamepad1.dpad_left || gamepad2.dpad_left) {
+            // if the trigger is pushed on gamepad1, decrease the position of
+            // the arm servo.
+            backPosition = BACK_MAX_RANGE;
         }
         /*
         // update the position of the claw
@@ -220,6 +278,12 @@ public class T9015TeleOp extends OpMode {
         servo1.setPosition(armPosition);
         //claw.setPosition(clawPosition);
 
+        // clip the position values so that they never exceed their allowed range.
+       // backPosition = Range.clip(backPosition, BACK_MIN_RANGE, BACK_MAX_RANGE);
+
+        // write position values to the wrist and claw servo
+        sback.setPosition(backPosition);
+        //claw.setPosition(clawPosition);
 
 
 		/*
@@ -229,11 +293,11 @@ public class T9015TeleOp extends OpMode {
 		 * are currently write only.
 		 */
 
-        telemetry.addData("Text", "*** Robot Data***");
-        telemetry.addData("arm", "arm:  " + String.format("%.2f", armPosition));
-        //telemetry.addData("claw", "claw:  " + String.format("%.2f", clawPosition));
-        telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
-        telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
+        telemetry.addData("Text", "*** 9015 Robot Data***");
+        telemetry.addData("01", "arm:  " + String.format("%.2f", armPosition));
+        telemetry.addData("02", "pwr left: " + String.format("%.2f ", left) +
+                                "right: " + String.format("%.2f", right));
+        telemetry.addData("03", "pwr hang: " + String.format("%.2f", hpower));
     }
 
     /*
