@@ -78,11 +78,11 @@ public class T9015Auto_R_VisitorRamp extends T9015Hardware {
                 //only need to initialize encoders on first time in state
                 if (first_time_in_state()) {
                     run_using_encoders();
-                    turn_left(); //set direction to turn left
+                    turn_right(); //set direction to turn right
                 }
                 degrees    = 45;  //set turn degree
                 power    = 0.3;  //set power
-                telemetry.addData("3 - ", "turn_left=" + degrees + "p=" + power); //displays distance and power to phone screen
+                telemetry.addData("3 - ", "turn_right=" + degrees + "p=" + power); //displays distance and power to phone screen
                 if (has_driver_turned_degrees(degrees, power)) //when encoder has reached given number of ticks corresponding to given degree measure move to next state
                     move_to_next_state();
                 break;

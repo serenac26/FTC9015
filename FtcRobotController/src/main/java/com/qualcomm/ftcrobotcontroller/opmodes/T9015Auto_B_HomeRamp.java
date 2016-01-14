@@ -1,7 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 /**
- * Autonomous program for putting climbers in the shelter and going up the red ramp on visitor side
+ * Autonomous program for going up the blue ramp on home side
  *
  * Key point: Robot is programmed to go forward in front of the ramp and backwards to ensure there is no debris blocking the turn path
  *

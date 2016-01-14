@@ -1,7 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 /**
- * Autonomous program for putting climbers in the shelter and going up the red ramp on visitor side
+ * Autonomous program for going up the red ramp on home side
  *
  * Key point: Robot is programmed to go forward in front of the ramp and backwards to ensure there is no debris blocking the turn path
  *
@@ -97,7 +97,7 @@ public class T9015Auto_R_HomeRamp extends T9015Hardware {
                     run_using_encoders();
                     go_backward();  //set direction backward
                 }
-                distance = 45;  //set distance to move (cm)
+                distance = 30;  //set distance to move (cm)
                 power    = 0.3;  //set power
                 telemetry.addData("4 - ","backward=" + distance + "p=" + power); //displays distance and power to phone screen
                 if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
