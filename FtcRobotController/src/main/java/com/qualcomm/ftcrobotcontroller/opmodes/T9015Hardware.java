@@ -1292,7 +1292,7 @@ public class T9015Hardware extends OpMode
         }
     }
 
-    protected boolean has_driver_forward(double count, double power) {
+    protected boolean has_driver_moved(double count, double power) {
         set_drive_power(power, power);
 
         //
@@ -1316,7 +1316,7 @@ public class T9015Hardware extends OpMode
         return false;
     }
 
-    protected boolean has_driver_backward(double count, double power) {
+    /*protected boolean has_driver_backward(double count, double power) {
         set_drive_power(power, power);
 
         //
@@ -1339,9 +1339,9 @@ public class T9015Hardware extends OpMode
         }
         return false;
     }
-
-    protected boolean has_driver_forward_cm(double cm, double power) {
-        return has_driver_forward(convertCMToTicks(cm), power);
+*/
+    protected boolean has_driver_moved_cm(double cm, double power) {
+        return has_driver_moved(convertCMToTicks(cm), power);
     }
 
     protected boolean has_driver_turned_degrees(double degrees, double power){
