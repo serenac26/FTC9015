@@ -62,7 +62,7 @@ public class FtcOpModeRegister implements OpModeRegister {
 //   manager.register("TestTeleOp", TestTeleOp.class);
 
     manager.register("TeleOp", T9015TeleOp.class);
-    manager.register("R_ramp", T9015Auto_R_VisitorRamp.class);
+    //manager.register("R_ramp", T9015Auto_R_VisitorRamp.class);
    // manager.register("T9015BlueAutoOp", T9015BlueAutoOp.class);
 
   //  manager.register("T9015RedAutoOp1", T9015RedAutoOp1.class);
@@ -70,16 +70,21 @@ public class FtcOpModeRegister implements OpModeRegister {
   //  manager.register("T9015RedAutoOp3", T9015RedAutoOp3.class);
   //  manager.register("T9015RedAutoOp4", T9015RedAutoOp4.class);
     //manager.register("DetectColor", DetectColor.class);
-    manager.register("OpModeConfig", OpModeConfig.class);
-    manager.register("OpFtcConfig", OpModeConfig.class);
+    //manager.register("OpModeConfig", OpModeConfig.class);
+    //manager.register("OpFtcConfig", OpModeConfig.class);
   //  manager.register("T9015BlueAutoOp1", T9015BlueAutoOp1.class);
   //  manager.register("T9015BlueAutoOp2", T9015BlueAutoOp2.class);
   //  manager.register("T9015BlueAutoOp3", T9015BlueAutoOp3.class);
   //  manager.register("T9015BlueAutoOp4", T9015BlueAutoOp4.class);
     manager.register("T9015RedAutoOpHR", T9015Auto_R_HomeRamp.class);
-    manager.register("T9015BlueAutoOpVR", T9015Auto_R_VisitorRamp.class);
-    manager.register("T9015BlueAutoOpHCR", T9015Auto_R_HomeClimberRamp.class);
-    manager.register("T9015BlueAutoOpVCR", T9015Auto_R_VisitorClimberRamp.class);
+    manager.register("T9015RedAutoOpVR", T9015Auto_R_VisitorRamp.class);
+    manager.register("T9015RedAutoOpHCR", T9015Auto_R_HomeClimberRamp.class);
+    manager.register("T9015RedAutoOpVCR", T9015Auto_R_VisitorClimberRamp.class);
+
+    manager.register("T9015BlueAutoOpHR", T9015Auto_B_HomeRamp.class);
+    manager.register("T9015BlueAutoOpVR", T9015Auto_B_VisitorRamp.class);
+    manager.register("T9015BlueAutoOpHCR", T9015Auto_B_HomeClimberRamp.class);
+    manager.register("T9015BlueAutoOpVCR", T9015Auto_B_VisitorClimberRamp.class);
     /*
      * Uncomment any of the following lines if you want to register an op mode.
      */

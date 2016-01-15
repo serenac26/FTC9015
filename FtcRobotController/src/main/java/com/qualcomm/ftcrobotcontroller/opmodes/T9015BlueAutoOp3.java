@@ -38,7 +38,7 @@ public class T9015BlueAutoOp3 extends T9015Hardware {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(142, 0.3))
+                if (has_driver_moved_cm(142, 0.3))
                     move_to_next_state();
                 break;
             case 2:
@@ -67,7 +67,7 @@ public class T9015BlueAutoOp3 extends T9015Hardware {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(200, 1.0)) //full throttle up the ramp
+                if (has_driver_moved_cm(200, 1.0)) //full throttle up the ramp
                     move_to_next_state();
                 break;
             /*case 5:

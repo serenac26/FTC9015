@@ -37,7 +37,7 @@ public class T9015RedAutoOp2 extends T9015Hardware {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(150, 0.4))
+                if (has_driver_moved_cm(150, 0.4))
                     move_to_next_state();
                 break;
             case 2:
@@ -66,7 +66,7 @@ public class T9015RedAutoOp2 extends T9015Hardware {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(20, 0.4))
+                if (has_driver_moved_cm(20, 0.4))
                     move_to_next_state();
                 break;
             case 6:
@@ -80,7 +80,7 @@ public class T9015RedAutoOp2 extends T9015Hardware {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(20, 0.4))
+                if (has_driver_moved_cm(20, 0.4))
                     move_to_next_state();
                 break;
             case 8:
@@ -108,7 +108,7 @@ public class T9015RedAutoOp2 extends T9015Hardware {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(120, 0.4))
+                if (has_driver_moved_cm(120, 0.4))
                     move_to_next_state();
                 break;
             case 12:
@@ -136,7 +136,7 @@ public class T9015RedAutoOp2 extends T9015Hardware {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(100, 1.0)) //full throttle up the ramp
+                if (has_driver_moved_cm(100, 1.0)) //full throttle up the ramp
                     move_to_next_state();
                 break;
             default:

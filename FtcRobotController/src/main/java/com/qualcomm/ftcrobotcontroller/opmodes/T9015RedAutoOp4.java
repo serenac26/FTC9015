@@ -37,7 +37,7 @@ public class T9015RedAutoOp4 extends T9015Hardware {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(50, 0.4))
+                if (has_driver_moved_cm(50, 0.4))
                     move_to_next_state();
                 break;
             case 2:
@@ -67,7 +67,7 @@ public class T9015RedAutoOp4 extends T9015Hardware {
                     run_using_encoders();
                     set_direction_forward(v_forward);
                 }
-                if (has_driver_forward_cm(250, 1.0)) //full throttle up the ramp
+                if (has_driver_moved_cm(250, 1.0)) //full throttle up the ramp
                     move_to_next_state();
                 break;
             default:
