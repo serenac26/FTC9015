@@ -49,7 +49,7 @@ public class T9015Auto_R_HomeRamp extends T9015Hardware {
                 distance = 30; //set distance to move (cm)
                 power    = 0.3; //set power
                 telemetry.addData("1 - ", "forward=" + distance + "p=" + power); //displays distance and power to phone screen
-                if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
+                if (has_driver_moved_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
                     move_to_next_state();
                 break;
             case 2:
@@ -83,7 +83,7 @@ public class T9015Auto_R_HomeRamp extends T9015Hardware {
                 distance = 120;  //set distance to move (cm)
                 power    = 0.3;  //set power
                 telemetry.addData("3 - ","forward=" + distance + "p=" + power); //displays distance and power to phone screen
-                if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
+                if (has_driver_moved_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
                     move_to_next_state();
                 break;
             case 6:
@@ -100,7 +100,7 @@ public class T9015Auto_R_HomeRamp extends T9015Hardware {
                 distance = 60;  //set distance to move (cm)
                 power    = 0.3;  //set power
                 telemetry.addData("4 - ","backward=" + distance + "p=" + power); //displays distance and power to phone screen
-                if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
+                if (has_driver_moved_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
                     move_to_next_state();
                 break;
             case 8:
@@ -135,7 +135,7 @@ public class T9015Auto_R_HomeRamp extends T9015Hardware {
                 distance = 120;  //set distance to move (cm)
                 power    = 0.8;  //set power
                 telemetry.addData("6 - ","forward=" + distance + "p=" + power); //displays distance and power to phone screen
-                if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
+                if (has_driver_moved_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
                     move_to_next_state(); //moves to final default state and ends program
                 break;
             default:
