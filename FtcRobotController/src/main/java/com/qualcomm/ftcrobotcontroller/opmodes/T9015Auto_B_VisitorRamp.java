@@ -49,7 +49,7 @@ public class T9015Auto_B_VisitorRamp extends T9015Hardware {
                 distance = 240; //set distance to move (cm)
                 power    = 0.3; //set power
                 telemetry.addData("1 - ", "forward=" + distance + "p=" + power); //displays distance and power to phone screen
-                if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
+                if (has_driver_moved_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
                     move_to_next_state();
                 break;
             case 2:
@@ -66,7 +66,7 @@ public class T9015Auto_B_VisitorRamp extends T9015Hardware {
                 distance = 60;  //set distance to move (cm)
                 power    = 0.3;  //set power
                 telemetry.addData("2 - ","backward=" + distance + "p=" + power); //displays distance and power to phone screen
-                if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
+                if (has_driver_moved_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
                     move_to_next_state();
                 break;
             case 4:
@@ -101,7 +101,7 @@ public class T9015Auto_B_VisitorRamp extends T9015Hardware {
                 distance = 120;  //set distance to move (cm)
                 power    = 0.8;  //set power
                 telemetry.addData("4 - ","forward=" + distance + "p=" + power); //displays distance and power to phone screen
-                if (has_driver_forward_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
+                if (has_driver_moved_cm(distance, power)) //when encoder has reached corresponding ticks for set distance move to the next state
                     move_to_next_state(); //moves to final default state and ends program
                 break;
             default:
